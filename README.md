@@ -58,3 +58,9 @@ virsh list
 ./cmd/inject_ssh_key.sh
 ./cmd/inject_ssh_key.sh $dom $user $key_file
 ```
+
+## set hostname for domain
+```
+./cmd/resize_volume.sh
+./cmd/resize_volume.sh $dom $size $disk $volume
+```
