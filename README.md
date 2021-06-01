@@ -39,3 +39,10 @@ VM_VCPUS=6
 virsh create /tmp/vir_domain/$VM_NAME.xml
 virsh list
 ```
+
+## inject interface script to disable dhcp
+
+```
+./cmd/inject_tail_ifcs_script.sh
+./cmd/inject_tail_ifcs_script.sh $dom
+```
