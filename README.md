@@ -52,3 +52,9 @@ virsh list
 ./cmd/set_hostname.sh
 ./cmd/set_hostname.sh $dom $hostname
 ```
+
+## set hostname for domain
+```
+./cmd/inject_ssh_key.sh
+./cmd/inject_ssh_key.sh $dom $user $key_file
+```
