@@ -10,11 +10,17 @@
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 SCRIPT_NAME=$(basename "${BASH_SOURCE[0]}")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source ${SCRIPT_DIR}/../src/utils/net_struct_parser.sh
 # echo $ABSOLUTE_PATH, $SCRIPT_NAME, $SCRIPT_DIR
 
+source ${SCRIPT_DIR}/../src/global.vars
+for i in `ls ${SCRIPT_DIR}/../src/utils/*`; do
+  echo "source $i"
+  source $i
+done
+
 END=${1:-5}
-len=${#macstr[@]}
+declare -p MACS
+len=${#MACS[@]}
 if [ $len -eq 0 ] ; then
    echo "Please define MACS as follow exampel:"
    echo '  declare -A MACS=([EDGE1]="" [EDGE2]="" [EDGE3]="" [HUB]="" [CLOUD]="")'

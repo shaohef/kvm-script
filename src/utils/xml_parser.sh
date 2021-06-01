@@ -13,6 +13,6 @@ echo ${ret[@]}
 }
 
 function get_xml_elem_text(){
-
+echo "Not implementation"
 }
 
