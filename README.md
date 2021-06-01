@@ -46,3 +46,9 @@ virsh list
 ./cmd/inject_tail_ifcs_script.sh
 ./cmd/inject_tail_ifcs_script.sh $dom
 ```
+
+## set hostname for domain
+```
+./cmd/set_hostname.sh
+./cmd/set_hostname.sh $dom $hostname
+```
