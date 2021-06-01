@@ -22,3 +22,20 @@ virsh net-list
 
 ```
 delete a network by: `virsh net-destroy`
+
+## Generate domain xml snippet files and create vm
+
+```
+./cmd/generate_domain_xml.sh
+
+HOST=cloud
+IMG=/var/lib/libvirt/images/$HOST.qcow2
+
+VM_NAME=smartcity_$HOST
+VM_MEMSIZE_G=10
+VM_VCPUS=6
+
+./cmd/generate_domain_xml.sh NET_MACS $HOST NET_NAMES
+virsh create /tmp/vir_domain/$VM_NAME.xml
+virsh list
+```

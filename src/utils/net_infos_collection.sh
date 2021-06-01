@@ -55,3 +55,42 @@ function gen_ip_array(){
   done
   echo ${ret[@]}
 }
+
+# get_host_macs NET_MACS HUB
+function get_host_macs(){
+  # $1 net macs map NET_MACS, $2 hostname, $3 macs pool
+  VAL=${2^^}
+  ret=()
+  for i in $(eval "echo \${!$1[@]}"); do
+    v=$(eval "echo \${$1[$i]}")
+    match=$(grep -o "$VAL:[[:digit:]]\{1,4\}" <<< $v)
+    if [ $? -ne 0 ]; then
+      continue
+    fi
+    idx=${match#*:}
+    macs=${match%%:*}_MACS
+    string=$(eval "echo \${$macs}")
+    array=($string)
+    # echo "\${array[${!idx}]}"
+    mac=$(eval "echo \${array[${idx}]}")
+    # 0 host, 1 index, 2 network, 3 mac
+    ret+=("$VAL $idx $i $mac,")
+  done
+  # IFS=$'\n' sorted=($(sort <<<"${ret[*]}")); unset IFS
+  # readarray -t sorted < <(for a in "${ret[@]}"; do echo "$a"; done | sort)
+  sorted=($(printf '%s\n' "${ret[@]}"|sort))
+  echo ${sorted[@]}
+}
+
+# get_network_brige NET_NAMES ansible_cloud
+function get_network_brige(){
+# $1 NET_NAMES $2 network name
+for i in $(eval "echo \${!$1[@]}"); do
+  v=$(eval "echo \${$1[i]}")
+  NM=${v%:*}    BR=$(awk -F"[, :]" '{print $1}' <<< ${v#*: })
+  if [ "$NM" = "$2" ]; then
+    echo $BR
+    break
+  fi
+done
+}
