@@ -9,3 +9,10 @@ tools to management KVM
 declare -A MACS=([host1]="" [host2]="" [hostn]="")
 ./cmd/generate_mac_pool.sh
 ```
+
+## Generate network xml snippet files
+
+```
+./cmd/generate_network_xmls.sh
+
+```
