@@ -34,6 +34,7 @@ function check_resize_dom_lvm_1st_arg(){
      ret=$?
      [[ $ret -ne 0 ]] && return $ret
   fi
+  return 0
 }
 
 
