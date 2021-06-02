@@ -28,11 +28,11 @@ done
 if [[ -z $1 && -z $2 ]] ; then
    echo "Please define MACS, NET_NAMES, NET_MACS, as follow example:"
    echo "---------------- vars define ----------------"
-   cat ${SCRIPT_DIR}/../src/global.vars
+   cat ${SCRIPT_DIR}/../global.vars
    echo "---------------- define end ----------------"
    echo 'EDGE1, EDGE2, EDGE3, HUB, CLOUD are hostname.'
    echo ""
-   echo "see define in: src/global.vars"
+   echo "see define in: ./global.vars"
    echo "Usage: "
    echo "  ${BASH_SOURCE[0]} NET_NAMES NET_MACS 192.168.124.1 nat"
 fi

@@ -35,12 +35,12 @@ delete a network by: `virsh net-destroy`
 ```
 ./cmd/generate_domain_xml.sh
 
-HOST=cloud
-IMG=/var/lib/libvirt/images/$HOST.qcow2
+export HOST=cloud
+export BASEIMG=/var/lib/libvirt/images/$HOST.qcow2
 
-VM_NAME=smartcity_$HOST
-VM_MEMSIZE_G=10
-VM_VCPUS=6
+export VM_NAME=smartcity_$HOST
+export VM_MEMSIZE_G=10
+export VM_VCPUS=6
 
 ./cmd/generate_domain_xml.sh NET_MACS $HOST NET_NAMES
 virsh create /tmp/vir_domain/$VM_NAME.xml
