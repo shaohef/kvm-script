@@ -12,6 +12,11 @@
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 SCRIPT_NAME=$(basename "${BASH_SOURCE[0]}")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+for i in `ls ${SCRIPT_DIR}/../src/utils/*`; do
+  echo "source $i"
+  source $i
+done
+
 for i in `ls ${SCRIPT_DIR}/../src/domain/*`; do
   echo "source $i"
   source $i
@@ -30,4 +35,4 @@ fi
 
 # https://stackoverflow.com/questions/4824590/propagate-all-arguments-in-a-bash-shell-script
 # echo $@, $*, "$@", "$*"
-inject_ifc_script \$dom
+inject_ifc_script $@
