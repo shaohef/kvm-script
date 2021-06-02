@@ -12,7 +12,7 @@ SCRIPT_NAME=$(basename "${BASH_SOURCE[0]}")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # echo $ABSOLUTE_PATH, $SCRIPT_NAME, $SCRIPT_DIR
 
-source ${SCRIPT_DIR}/../src/global.vars
+source ${SCRIPT_DIR}/../global.vars
 for i in `ls ${SCRIPT_DIR}/../src/utils/*`; do
   echo "source $i"
   source $i

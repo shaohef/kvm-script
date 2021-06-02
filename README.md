@@ -1,6 +1,13 @@
 # kvm-script
 tools to management KVM
 
+## configure your network in global.vars
+
+```
+cat global.vars
+vim global.vars
+```
+
 ## Generate a mac pool for host interfaces
 
 ```
