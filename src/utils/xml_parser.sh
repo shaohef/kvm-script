@@ -12,7 +12,11 @@ done
 echo ${ret[@]}
 }
 
+function str2jsonlist(){
+  echo "[\"${1/ /\", \"}\"]"
+}
+
 function get_xml_elem_text(){
-echo "Not implementation"
+  echo "Not implementation"
 }
 

@@ -60,14 +60,55 @@ virsh list
 ./cmd/set_hostname.sh $dom $hostname
 ```
 
-## set hostname for domain
+## inject ssh key into domain
 ```
 ./cmd/inject_ssh_key.sh
 ./cmd/inject_ssh_key.sh $dom $user $key_file
 ```
 
-## set hostname for domain
+## resize volume for a domain
 ```
 ./cmd/resize_volume.sh
 ./cmd/resize_volume.sh $dom $size $disk $volume
+```
+
+## attach a disk to a domain
+```
+./cmd/attach_disk.sh
+./cmd/attach_disk.sh $dom $size $disk $volume
+```
+
+
+# enhancement
+## leverage yp to pareser xml
+```
+# https://www.cloudsavvyit.com/1889/how-to-convert-xml-to-json-on-the-command-line/
+# https://stackoverflow.com/questions/61666898/convert-xml-to-json-using-command-line-or-using-shell-script
+# https://www.endpoint.com/blog/2019/12/31/making-sense-of-xml-json-in-shell
+# https://unix.stackexchange.com/questions/504880/script-to-translate-xml-to-json
+# http://manpages.ubuntu.com/manpages/bionic/man1/xml2json.1p.html
+# https://codefaster.substack.com/p/mastering-jq-xml-and-any-other-data
+# https://www.hellocodeclub.com/how-to-convert-xml-to-json-in-python-ultimate-guide/
+# https://linuxhint.com/python_xml_to_json/
+https_proxy=http://comany.com:xxx  pip3 install yq
+
+cat | xq .  << EOF
+<e>
+  <a>some</a>
+  <b>textual</b>
+  <a>content</a>
+</e>
+EOF
+
+cat | xq -x << EOF
+{
+  "e": {
+    "a": [
+      "some",
+      "content"
+    ],
+    "b": "textual"
+  }
+}
+EOF
 ```
