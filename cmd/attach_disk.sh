@@ -120,7 +120,8 @@ function attach_disk(){
   # img=$(gen_image_name $xml $dev)
   echo "attach $img as $dev"
   qemu-img create -f qcow2 $img $2
-  # virt-format -a $img
+  # virt-format --filesystem=xfs -a $img
+  virt-format -a $img
   virt-filesystems --long -h --all -a $img
   virsh attach-disk $1 $img $dev --driver=qemu --subdriver=qcow2 --current # --persistent --live --config
 }
