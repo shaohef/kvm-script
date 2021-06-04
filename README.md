@@ -78,6 +78,14 @@ virsh list
 ./cmd/attach_disk.sh $dom $size $disk $volume
 ```
 
+## Resize volume in guest
+```
+GUSER=root
+host=
+scp ./src/vm/script/create_lvm.sh $GUSER@$host:~/
+ssh $GUSER@$host
+./create_lvm.sh $dev $lv_path
+```
 
 # enhancement
 ## leverage yp to pareser xml
