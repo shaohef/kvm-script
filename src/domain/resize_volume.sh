@@ -148,7 +148,7 @@ function resize_dom_lvm(){
   nsize=${size%%[^0-9]*}
   [[ "$(($osize + 1))" -gt "$nsize"  ]] && echo "The original image size is ${osize}G. Please imput a bigger size." && return 1
 
-  lvinfo=$(parser_disk_lv_info $1)
+  lvinfo=$(parser_disk_lv_info $img)
   IFS=', ' array=($lvinfo); unset IFS
   lvroot=${4:-${array[0]}}
   fstype=${array[1]}
@@ -167,8 +167,17 @@ function resize_dom_lvm(){
   # https://blog.csdn.net/tutucute0000/article/details/38414449
   echo "virt-resize --expand $pv_disk --LV-expand $lvroot $img $tmp_img"
   virt-resize --expand $pv_disk --LV-expand $lvroot "$img" "$tmp_img"
+  ret=$?
+  if [[ $ret -eq 0 ]] ; then
+    echo "virt-resize Sucessfully!"
+  else
+    echo "fail to virt-resize!"
+    exit 1
+  fi
   echo "virt-customize -a $tmp_img --run $script"
   virt-customize -a $tmp_img --run $script
+  ret=$?
+  echo "virt-filesystems --long -h --all -a $tmp_img"
   virt-filesystems --long -h --all -a $tmp_img
   if [[ $ret -eq 0 ]] ; then
     echo "mv $tmp_img $img -f"
