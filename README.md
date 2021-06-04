@@ -75,16 +75,42 @@ virsh list
 ## attach a disk to a domain
 ```
 ./cmd/attach_disk.sh
-./cmd/attach_disk.sh $dom $size $disk $volume
+./cmd/attach_disk.sh $dom $size
 ```
 
 ## Resize volume in guest
+This command is used for extend lvm in an activity guest.
+Please check your guest OS support hot plugin.
+```
+# grep "CONFIG_HOTPLUG_PCI_ACPI=" /boot/config-`uname -r`
+CONFIG_HOTPLUG_PCI=y
+
+# grep "CONFIG_HOTPLUG_PCI=" /boot/config-`uname -r`
+CONFIG_HOTPLUG_PCI_ACPI=y
+
+# grep "CONFIG_MEMORY_HOTPLUG=" /boot/config-`uname -r`
+CONFIG_MEMORY_HOTPLUG=y
+```
+run these commands in host:
+```
+
+```
+you can also run these commands in guest:
 ```
 GUSER=root
 host=
 scp ./src/vm/script/create_lvm.sh $GUSER@$host:~/
 ssh $GUSER@$host
 ./create_lvm.sh $dev $lv_path
+```
+
+## run command or script in guest 
+```
+./cmd/run_in_vm.sh
+echo "cat /etc/hostname" >> guest_host.sh
+chmod a+x guest_host.sh
+./cmd/run_in_vm.sh $dom - ./guest_host.sh
+./cmd/run_in_vm.sh $dom lsblk
 ```
 
 # enhancement
