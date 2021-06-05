@@ -113,11 +113,12 @@ chmod a+x guest_host.sh
 ./cmd/run_in_vm.sh $dom lsblk
 ```
 
-## run command or script in guest 
+## login guest by ssh
 ```
 cp ./cmd/ssh_vm.sh /usr/bin/ssh-vm
 ssh-vm
 ```
+![ssh vm](images/ssh_vm.jpg)
 
 # enhancement
 ## leverage yp to pareser xml
