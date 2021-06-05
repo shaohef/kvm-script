@@ -98,10 +98,18 @@ CONFIG_HOTPLUG_PCI_ACPI=y
 # grep "CONFIG_MEMORY_HOTPLUG=" /boot/config-`uname -r`
 CONFIG_MEMORY_HOTPLUG=y
 ```
+
 run these commands in host:
 ```
-
+dom=virtio_nic
+./cmd/create_lvm_in_vm.sh 
+./cmd/run_in_vm.sh $dom lsblk
+./cmd/run_in_vm.sh $dom lvdisplay 
+dev=vda
+lv=/dev/centos/root
+./cmd/create_lvm_in_vm.sh $dom $dev $lv 
 ```
+
 you can also run these commands in guest:
 ```
 GUSER=root
