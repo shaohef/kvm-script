@@ -118,7 +118,7 @@ chmod a+x guest_host.sh
 cp ./cmd/ssh_vm.sh /usr/bin/ssh-vm
 ssh-vm
 ```
-![ssh vm](images/ssh_vm.jpg)
+![ssh vm](images/ssh_vm.PNG)
 
 # enhancement
 ## leverage yp to pareser xml
