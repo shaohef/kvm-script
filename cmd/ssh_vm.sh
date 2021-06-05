@@ -49,6 +49,18 @@ echo ${ret[@]}
 }
 
 
+function get_dom_xml_attr_value(){
+ret=()
+str=$(virsh dumpxml $2 |xmllint --xpath "$1" -)
+entries=($(echo ${str}))
+for entry in "${entries[@]}"; do
+  result=$(echo $entry | awk -F'[="]' '!/>/{print $(NF-1)}')
+  ret+=("$result")
+done
+echo ${ret[@]}
+}
+
+
 function gen_dev_index(){
   xml=$1
   XML_IFC_EXP="//*[local-name()='interface'][1][@type='network']/mac/@address"
@@ -68,6 +80,15 @@ function get_ip_from_file(){
   echo ${ip//\"/}
 }
 
+function get_ip_from_virsh(){
+  XML_MAC_EXP="//*[local-name()='interface'][1][@type='network']/mac/@address"
+  XML_NET_EXP="//*[local-name()='interface'][1][@type='network']/source/@network"
+  net=$(get_dom_xml_attr_value $XML_NET_EXP $1) 
+  mac=$(get_dom_xml_attr_value $XML_MAC_EXP $1) 
+  ip=`virsh net-dhcp-leases $net $mac |grep -v "Expiry Time" |grep -v "^---" |grep -v "^$" |awk '{print $5}'`
+  echo ${ip%%/*}
+}
+
 if [[ -z $1 ]] ; then
    echo "Please specify the domain name and guest user, get domain name by:"
    echo "  virsh list --all"
@@ -82,6 +103,7 @@ fi
 dom=${1#*@}
 [[ $1 =~ "@" ]] && user_at="${1%%@*}@" || user_at=""
 
+# host=$(get_ip_from_virsh $dom)
 # https://unix.stackexchange.com/questions/486657/how-to-get-a-bash-script-argument-given-its-position-from-the-end
 xml=$(get_xml $dom)
 mac=$(gen_dev_index /tmp/vir_domain/tmp.xml)
