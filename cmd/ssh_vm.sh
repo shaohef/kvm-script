@@ -89,6 +89,19 @@ function get_ip_from_virsh(){
   echo ${ip%%/*}
 }
 
+
+function get_dom_net_mac(){
+  net_mac=$(virsh domiflist $1 |grep -v "^Interface" |grep -v "^---" |grep -v "^$"|head -n 1 |awk '{print $3" "$5}')
+  echo $net_mac 
+  # will output: ansible_edge 00:16:3e:66:0e:cb
+}
+
+function get_dom_ip(){
+  ip=$(virsh domifaddr $1 |grep -v "MAC address" |grep -v "^---" |grep -v "^$"|head -n 1 |awk '{print $4}')
+  echo ${ip%%/*}
+}
+
+
 if [[ -z $1 ]] ; then
    echo "Please specify the domain name and guest user, get domain name by:"
    echo "  virsh list --all"
@@ -104,6 +117,7 @@ dom=${1#*@}
 [[ $1 =~ "@" ]] && user_at="${1%%@*}@" || user_at=""
 
 # host=$(get_ip_from_virsh $dom)
+# host=$(get_dom_ip $dom)
 # https://unix.stackexchange.com/questions/486657/how-to-get-a-bash-script-argument-given-its-position-from-the-end
 xml=$(get_xml $dom)
 mac=$(gen_dev_index /tmp/vir_domain/tmp.xml)

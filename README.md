@@ -7,6 +7,7 @@ tools to management KVM
 cat global.vars
 vim global.vars
 ```
+![vm networks](images/VM-NETWORK.PNG)
 
 ## Generate a mac pool for host interfaces
 
@@ -31,6 +32,9 @@ virsh net-list
 delete a network by: `virsh net-destroy`
 
 ## Generate domain xml snippet files and create vm
+please prepare a image for VM firstly follow these guide:
+- [Quickly Build Virtual Machine Images With Virt-builder](#https://ostechnix.com/quickly-build-virtual-machine-images-with-virt-builder/)
+- [Virt-builder and virt-install](#https://developer.fedoraproject.org/tools/virt-builder/about.html)
 
 ```
 ./cmd/generate_domain_xml.sh
@@ -46,6 +50,9 @@ export VM_VCPUS=6
 virsh create /tmp/vir_domain/$VM_NAME.xml
 virsh list
 ```
+You can also install a vm by: 
+[15 virt-install examples | KVM virtualization commands cheatsheet](#https://www.golinuxcloud.com/virt-install-examples-kvm-virt-commands-linux/)
+
 
 ## inject interface script to disable dhcp
 
@@ -153,3 +160,6 @@ cat | xq -x << EOF
 }
 EOF
 ```
+
+# REF:
+- [install window guest with virtio drivers](#https://opennodecloud.com/opennode-os/2013/01/01/howto-kvm-guest-install.html)
