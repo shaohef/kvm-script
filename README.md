@@ -33,8 +33,8 @@ delete a network by: `virsh net-destroy`
 
 ## Generate domain xml snippet files and create vm
 please prepare a image for VM firstly follow these guide:
-- [Quickly Build Virtual Machine Images With Virt-builder](#https://ostechnix.com/quickly-build-virtual-machine-images-with-virt-builder/)
-- [Virt-builder and virt-install](#https://developer.fedoraproject.org/tools/virt-builder/about.html)
+- [Quickly Build Virtual Machine Images With Virt-builder](https://ostechnix.com/quickly-build-virtual-machine-images-with-virt-builder/)
+- [Virt-builder and virt-install](https://developer.fedoraproject.org/tools/virt-builder/about.html)
 
 ```
 ./cmd/generate_domain_xml.sh
@@ -51,7 +51,7 @@ virsh create /tmp/vir_domain/$VM_NAME.xml
 virsh list
 ```
 You can also install a vm by: 
-[15 virt-install examples | KVM virtualization commands cheatsheet](#https://www.golinuxcloud.com/virt-install-examples-kvm-virt-commands-linux/)
+[15 virt-install examples | KVM virtualization commands cheatsheet](https://www.golinuxcloud.com/virt-install-examples-kvm-virt-commands-linux/)
 
 
 ## inject interface script to disable dhcp
