@@ -104,6 +104,7 @@ function get_dom_ip(){
 
 delete=false
 check=false
+# https://stackoverflow.com/questions/21542054/how-to-intercept-and-remove-a-command-line-argument-in-bash
 for arg do
   shift
   [ "$arg" = "-d" ] && delete=true && continue
@@ -155,22 +156,24 @@ host=$(get_ip_from_file $mac)
 hopip=$(ip route get 1 | awk '{match($0, /.+src\s([.0-9]+)/, a);print a[1];exit}')
 if [ "$check" = true ]; then
   echo "Check the exist proxy: $hopip:${3:-$2} -> $host:$2"
+  iptables -L PREROUTING -t nat -nv --line | head -n 2
   iptables -L PREROUTING -t nat -nv --line |grep $host |grep $2 |grep ${3:-$2}
   exit 1
 fi
 if [ "$delete" = true ]; then
   echo "Delete the exist proxy: $hopip:${3:-$2} -> $host:$2"
-  iptables -D PREROUTING -t nat --dport ${3:-$2} -j DNAT --to $host:$2
-  iptables -D FORWARD  -d $host --dport $2 -j ACCEPT
+  iptables -D PREROUTING -t nat -p tcp --dport ${3:-$2} -j DNAT --to $host:$2
+  iptables -D FORWARD  -d $host -p tcp --dport $2 -j ACCEPT
   exit 1
 fi
 
 echo "Set the proxy: $hopip:${3:-$2} -> $host:$2"
+# https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
 # https://www.systutorials.com/port-forwarding-using-iptables/
 # iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j DNAT --to $host:8080
 # iptables -A FORWARD -p tcp -d 192.168.1.2 --dport 8080 -j ACCEPT
-iptables -A PREROUTING -t nat --dport ${3:-$2} -j DNAT --to $host:$2
-iptables -A FORWARD  -d $host --dport $2 -j ACCEPT
+iptables -A PREROUTING -t nat -p tcp --dport ${3:-$2} -j DNAT --to $host:$2
+iptables -A FORWARD  -d $host -p tcp --dport $2 -j ACCEPT
 
 echo "if not able to connect, check if port is available on firewall with following snippet:"
 
