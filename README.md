@@ -128,6 +128,13 @@ chmod a+x guest_host.sh
 ./cmd/run_in_vm.sh $dom lsblk
 ```
 
+## Set a proxy for vm access
+host:port -> vm:port 
+```
+./cmd/vm_port_proxy.sh
+./cmd/vm_port_proxy.sh $dom 8080 
+```
+
 ## login guest by ssh
 ```
 cp ./cmd/ssh_vm.sh /usr/bin/ssh-vm
