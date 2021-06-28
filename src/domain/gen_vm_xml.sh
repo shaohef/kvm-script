@@ -22,7 +22,8 @@ cp $BASEIMG $IMG
 virt-edit -a $IMG /etc/hostname -e "s/^.*$/$2/"
 
 ifc=$(virt-ls -a $IMG  /etc/sysconfig/network-scripts/ |grep ifcfg-ens* |head -n 1)
-virt-edit -a $IMG /etc/sysconfig/network-scripts/ifc -e 's/^BOOTPROTO=.*/BOOTPROTO=dhcp/'
+virt-edit -a $IMG /etc/sysconfig/network-scripts/$ifc -e 's/^BOOTPROTO=.*/BOOTPROTO=dhcp/'
+virt-edit -a $IMG /etc/sysconfig/network-scripts/$ifc -e 's/^IPADDR=/# IPADDR=/'
 
 # $1 net macs map NET_MACS, $2 hostname, $3 network-bridge NET_NAMES
 mkdir -p /tmp/vir_domain
